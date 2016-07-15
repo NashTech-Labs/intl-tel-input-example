@@ -1,0 +1,60 @@
+<html>
+<head>
+
+<link rel="stylesheet" href="intl-tel-input-9.0.0 (2)/build/css/intlTelInput.css">
+<style>
+.iti-flag {background-image: url("intl-tel-input-9.0.0 (2)/build/img/flags.png");}
+</style>
+</head>
+
+<body>
+<form id="userPhoneForm" role="form" method="post" >
+phone number
+<input type="tel" id="phone" name="phone">
+<span class="input-group-btn" style="color:red;">
+		<button class="addPhoneSubmit" type="submit" onclick="validate()">Add Phone Number</button>
+		<div id ="userPhoneDiv" ></div> 
+
+</span>
+</form>
+</body>
+
+<script src="jquery-2.2.0.min.js"></script>
+<script src="jquery.validate.min.js"></script>
+<script src="intl-tel-input-9.0.0 (2)/build/js/intlTelInput.js"></script>
+<script src="libphonenumber/utils.js"></script>
+
+<script type="text/javascript">
+
+$.validator.addMethod("phoneNumValidation", function(value) {
+   	        return $("#phone").intlTelInput("isValidNumber")
+}, 'Please enter a valid number');
+
+var validate = function() {
+	$("#userPhoneForm").validate({
+		rules: {
+			phone: {
+				required: true,
+             	 phoneNumValidation: true
+				}
+		},
+		messages: {
+			phone: {
+				required: "Phone number is required field."
+			}
+		},
+		errorPlacement : function(error, element) {
+			error.insertAfter($("#userPhoneDiv"));
+		}
+	});
+}
+
+$(document).ready(function() {
+		$("#phone").intlTelInput({utilsScript: "libphonenumber/utils.js"});              
+});
+
+</script>
+
+
+</html>
+
